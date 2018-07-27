@@ -1,5 +1,5 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Appearance
+"                                  Appearance
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Cursors
@@ -30,7 +30,7 @@ set autoindent softtabstop=4 shiftwidth=4 expandtab
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Mappings
+"                                   Mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Leader
@@ -51,18 +51,18 @@ inoremap <ESC> <NOP>
 
 " Toggling line numbers
 nnoremap <silent><expr> <leader>n &number == 1 ?
-    \ ":set nonumber norelativenumber<cr>" .
-    \ ":echo 'nonumber norelativenumber'<cr>" :
-    \ ":set number relativenumber<cr>" .
-    \ ":echo '  number   relativenumber'<cr>"
+    \":set nonumber norelativenumber<cr>" .
+    \":echo 'nonumber norelativenumber'<cr>" :
+    \":set number relativenumber<cr>" .
+    \":echo '  number   relativenumber'<cr>"
 
 " Toggling  hidden characters
 nnoremap <silent><leader>l :set list!<cr>
-    \ :set list?<cr>
+    \:set list?<cr>
 
 " Toggling wrapping
 nnoremap <silent><leader>w :set wrap!<cr>
-    \ :set wrap?<cr>
+    \:set wrap?<cr>
 
 " Turning of highlighting for current search
 nnoremap <silent> <leader><space> :nohlsearch<cr>
@@ -70,13 +70,19 @@ nnoremap <silent> <leader><space> :nohlsearch<cr>
 " Editing and sourcing .vimrc
 nnoremap <silent> <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <silent> <leader>sv :update<cr>
-    \ :source $MYVIMRC<cr>
-    \ :echo "Sourced .vimrc"<cr>
+    \:source $MYVIMRC<cr>
+    \:echo "Sourced .vimrc"<cr>
 
 " Sourcing
 nnoremap <silent> <leader>ss :update<cr>
-    \ :execute 'source ' . expand('%:p')<cr>
-    \ :echo "Sourced this file"<cr>
+    \:execute 'source ' . expand('%:p')<cr>
+    \:echo "Sourced this file"<cr>
 
 " Decorating
-nnoremap <silent> <leader>d :call decorate#DecorateLine('"', ' ')<cr>
+nnoremap <silent> <leader>d :call decorate#DecorateLine()<cr>
+nnoremap <silent> <leader>b
+    \ :call decorate#DecorateLine()<cr>
+    \O<esc>
+    \:call decorate#DecorateLine('"', '"', '', '')<cr>
+    \jo<esc>
+    \:call decorate#DecorateLine('"', '"', '', '')<cr>
