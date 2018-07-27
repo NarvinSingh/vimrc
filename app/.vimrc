@@ -16,6 +16,7 @@ colorscheme badwolf
 " Visual elements
 set number relativenumber laststatus=2 cursorline colorcolumn=80
 set list listchars=eol:↲,tab:»▸,space:·,trail:•,extends:›,precedes:‹,nbsp:␣
+set hlsearch incsearch
 
 " Status line
 set statusline=%f\ %y\ %m\ %r\ %{FugitiveStatusline()}%=%v\ %l/%L
@@ -63,6 +64,9 @@ nnoremap <silent><leader>l :set list!<cr>
 nnoremap <silent><leader>w :set wrap!<cr>
     \ :set wrap?<cr>
 
+" Turning of highlighting for current search
+nnoremap <silent> <leader><space> :nohlsearch<cr>
+
 " Editing and sourcing .vimrc
 nnoremap <silent> <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <silent> <leader>sv :update<cr>
@@ -75,4 +79,4 @@ nnoremap <silent> <leader>ss :update<cr>
     \ :echo "Sourced this file"<cr>
 
 " Decorating
-nnoremap <silent><leader>d :call decorate#DecorateLine('"', ' ')<cr>
+nnoremap <silent> <leader>d :call decorate#DecorateLine('"', ' ')<cr>
