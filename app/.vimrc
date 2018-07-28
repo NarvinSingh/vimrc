@@ -1,55 +1,88 @@
-" Map leader
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  Appearance
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Cursors
+if &term =~ "xterm"
+    let &t_EI = "\<esc>[2 q"
+    let &t_SI = "\<esc>[5 q"
+    let &t_SR = "\<esc>[1 q"
+endif
+
+" Colors
+syntax on
+colorscheme badwolf
+
+" Visual elements
+set number relativenumber laststatus=2 cursorline colorcolumn=80
+set list listchars=eol:↲,tab:»▸,space:·,trail:•,extends:›,precedes:‹,nbsp:␣
+set hlsearch incsearch
+
+" Status line
+set statusline=%f\ %y\ %m\ %r\ %{FugitiveStatusline()}%=%v\ %l/%L
+
+" Wrapping
+set nowrap breakindent
+let &showbreak = '↪ '
+
+" Indenting
+set autoindent softtabstop=4 shiftwidth=4 expandtab
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   Mappings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Leader
 let mapleader = " "
 
-" Map switching from insert mode to normal mode 
+" Moving between splits
+noremap <c-j> <c-w>j
+noremap <c-k> <c-w>k
+noremap <c-h> <c-w>h
+noremap <c-l> <c-w>l
+
+" Resizing splits
+noremap <c-e> <c-w>=
+
+" Switching from insert mode to normal mode
 inoremap jk <ESC>
 inoremap <ESC> <NOP>
 
-" Map editing and sourcing vimrc
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
+" Toggling line numbers
+nnoremap <silent><expr> <leader>n &number == 1 ?
+    \":set nonumber norelativenumber<cr>" .
+    \":echo 'nonumber norelativenumber'<cr>" :
+    \":set number relativenumber<cr>" .
+    \":echo '  number   relativenumber'<cr>"
 
-" Map nohlsearch
-nnoremap <C-l> :nohlsearch<CR><C-l>
+" Toggling  hidden characters
+nnoremap <silent><leader>l :set list!<cr>
+    \:set list?<cr>
 
-" Map removing trailing whitespaces from file
-nnoremap <leader>ds :%s/\s\+$//e<cr>
+" Toggling wrapping
+nnoremap <silent><leader>w :set wrap!<cr>
+    \:set wrap?<cr>
 
-" Set colorscheme
-set t_Co=256
-colorscheme badwolf
+" Turning of highlighting for current search
+nnoremap <silent> <leader><space> :nohlsearch<cr>
 
-" Set cursors
-"   Cursor types
-"       0 -> Vertical Bar - Blinking
-"       1 -> Block - Blinking
-"       2 -> Block
-"       3 -> Underscore - Blinking
-"       4 -> Underscore
-"       5 -> Vertical Bar - Blinking
-"       6 -> Vertical Bar
-let &t_SI = "\<Esc>]12;white\x7"
-let &t_SI .= "\<Esc>[5 q"
-let &t_SR = "\<Esc>[1 q"
-let &t_EI = "\<Esc>]12;#0a9dff\x7"
-let &t_EI .= "\<Esc>[2 q"
-set cursorline
-set hlsearch
+" Editing and sourcing .vimrc
+nnoremap <silent> <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <silent> <leader>sv :update<cr>
+    \:source $MYVIMRC<cr>
+    \:echo "Sourced .vimrc"<cr>
 
-" Reset cursor when vim exits
-augroup reset_cursor
-    autocmd!
-    autocmd VimLeave * silent !echo -e -n "\x1b[\x35 q"
-augroup END
+" Sourcing
+nnoremap <silent> <leader>ss :update<cr>
+    \:execute 'source ' . expand('%:p')<cr>
+    \:echo "Sourced this file"<cr>
 
-" Set options for invisible characters and wrapping
-set listchars=eol:↲,tab:»▸,space:·,trail:•,extends:›,precedes:‹,nbsp:␣
-set breakindent
-let &showbreak = '↪ '
-
-" Set options by filetype
-augroup file_group_1
-    autocmd!
-    autocmd Filetype sh,shell,vim setlocal relativenumber colorcolumn=81 list
-        \ nowrap autoindent softtabstop=4 shiftwidth=4 expandtab
-augroup END
+" Decorating
+nnoremap <silent> <leader>d :call decorate#DecorateLine()<cr>
+nnoremap <silent> <leader>b
+    \ :call decorate#DecorateLine()<cr>
+    \O<esc>
+    \:call decorate#DecorateLine('"', '"', '', '')<cr>
+    \jo<esc>
+    \:call decorate#DecorateLine('"', '"', '', '')<cr>
