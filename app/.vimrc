@@ -38,6 +38,13 @@ let &showbreak = '↪ '
 
 " Indenting
 set autoindent softtabstop=4 shiftwidth=4 expandtab
+filetype plugin indent on
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   Behavior                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set backspace=indent,eol,start
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -96,36 +103,36 @@ nnoremap <silent> <Leader>ev :vsplit $MYVIMRC<CR>
 " Filetype commands
 augroup vimscript
     autocmd!
-    autocmd Filetype vim nnoremap <silent> <Leader>b
+    autocmd Filetype vim nnoremap <buffer> <silent> <Leader>b
         \ :call decorate#DecorateLine('" ', '', '', '', '', ' "')<CR>
         \O<Esc>
         \:call decorate#DecorateLine('"', '"', '', '')<CR>
         \jo<Esc>
         \:call decorate#DecorateLine('"', '"', '', '')<CR>
-    autocmd Filetype vim noremap <silent> <Leader>d
+    autocmd Filetype vim noremap <buffer> <silent> <Leader>d
         \ :call decorate#DecorateLine('" ', '', '', '', ' ', ' "', 'l')<CR>
-    autocmd Filetype vim nnoremap <Leader>c
+    autocmd Filetype vim nnoremap <buffer> <Leader>c
         \ I" <Esc>
 augroup END
 
 augroup javascript
     autocmd!
-    autocmd Filetype javascript nnoremap <silent> <Leader>b
+    autocmd Filetype javascript nnoremap <buffer> <silent> <Leader>b
         \ :call decorate#DecorateLine('//', '', '', '', '', '//')<CR>
         \O<Esc>
         \:call decorate#DecorateLine('//', '//', '', '')<CR>
         \jo<Esc>
         \:call decorate#DecorateLine('//', '//', '', '')<CR>
-    autocmd Filetype javascript noremap <silent> <Leader>d
+    autocmd Filetype javascript noremap <buffer> <silent> <Leader>d
         \ :call decorate#DecorateLine('// ', '', '', '', ' ', ' //', 'l')<CR>
-    autocmd Filetype javascript nnoremap <Leader>c
+    autocmd Filetype javascript nnoremap <buffer> <Leader>c
         \ I// <Esc>
     autocmd Filetype javascript inoreabbrev iff
         \ if ()<Left><C-r>=<SID>EatChar('\s')<CR>
     autocmd Filetype javascript inoreabbrev eii
-        \ else if ()<Left><C-r>=<SID>EatChar('\s')<CR>
+        \ <BS><Down><Esc>A else if ()<Left><C-r>=<SID>EatChar('\s')<CR>
     autocmd Filetype javascript inoreabbrev ell
-        \ else {<CR>}<Esc>O<Tab><C-r>=<SID>EatChar('\s')<CR>
+        \ <BS><Down><Esc>A else {<CR>}<Esc>O<C-r>=<SID>EatChar('\s')<CR>
     autocmd Filetype javascript inoreabbrev foo
         \ for ()<Left><C-r>=<SID>EatChar('\s')<CR>
     autocmd Filetype javascript inoreabbrev whh
@@ -135,9 +142,9 @@ augroup javascript
     autocmd Filetype javascript inoreabbrev sww
         \ switch ()<Left><C-r>=<SID>EatChar('\s')<CR>
     autocmd Filetype javascript inoreabbrev caa
-        \ <c-d>case :<Left><C-r>=<SID>EatChar('\s')<CR>
+        \ case :<Left><C-r>=<SID>EatChar('\s')<CR>
     autocmd Filetype javascript inoreabbrev dee
-        \ <c-d>default:<CR><Tab><C-r>=<SID>EatChar('\s')<CR>
+        \ default:<CR><C-r>=<SID>EatChar('\s')<CR>
     autocmd Filetype javascript inoreabbrev ree
         \ return;<Left><C-r>=<SID>EatChar('\s')<CR>
     autocmd Filetype javascript inoreabbrev brr
@@ -145,9 +152,7 @@ augroup javascript
     autocmd Filetype javascript inoreabbrev coo
         \ continue;<C-r>=<SID>EatChar('\s')<CR>
     autocmd Filetype javascript inoreabbrev jb
-        \ <BS><Esc>A {<CR>}<Esc>O<Tab><C-r>=<SID>EatChar('\s')<CR>
-    autocmd Filetype javascript inoreabbrev ji
-        \ <BS><Esc>o<Tab><C-r>=<SID>EatChar('\s')<CR>
+        \ <BS><Esc>A {<CR>}<Esc>O<C-r>=<SID>EatChar('\s')<CR>
     autocmd Filetype javascript inoreabbrev jo
         \ <BS><Down><Esc>o<C-r>=<SID>EatChar('\s')<CR>
 augroup END
