@@ -118,11 +118,14 @@ augroup END
 augroup javascript
     autocmd!
     autocmd Filetype javascript nnoremap <buffer> <silent> <Leader>b
-        \ :call decorate#DecorateLine('//', '', '', '', '', '//')<CR>
+        \ :let b:indentExpr = &indentexpr<CR>
+        \:set indentexpr=<CR>
+        \:call decorate#DecorateLine('//', '', '', '', '', '//')<CR>
         \O<Esc>
         \:call decorate#DecorateLine('//', '//', '', '')<CR>
         \jo<Esc>
         \:call decorate#DecorateLine('//', '//', '', '')<CR>
+        \:execute 'set indentexpr=' . b:indentExpr<CR>
     autocmd Filetype javascript noremap <buffer> <silent> <Leader>d
         \ :call decorate#DecorateLine('// ', '', '', '', ' ', ' //', 'l')<CR>
     autocmd Filetype javascript nnoremap <buffer> <Leader>c
