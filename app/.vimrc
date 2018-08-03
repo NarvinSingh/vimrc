@@ -33,7 +33,7 @@ nohlsearch
 set statusline=%f\ %y\ %m\ %r\ %{FugitiveStatusline()}%=%v\ %l/%L
 
 " Wrapping
-set nowrap breakindent
+set nowrap breakindent textwidth=80 linebreak
 let &showbreak = '↪ '
 
 " Indenting
@@ -104,30 +104,31 @@ nnoremap <silent> <Leader>ev :vsplit $MYVIMRC<CR>
 augroup vimscript
     autocmd!
     autocmd Filetype vim nnoremap <buffer> <silent> <Leader>b
-        \ :call decorate#DecorateLine('" ', '', '', '', '', ' "')<CR>
+        \ :call decorate#DecorateLine('" ', '', '', '', '', '')<CR>
         \O<Esc>
         \:call decorate#DecorateLine('"', '"', '', '')<CR>
         \jo<Esc>
         \:call decorate#DecorateLine('"', '"', '', '')<CR>
     autocmd Filetype vim noremap <buffer> <silent> <Leader>d
-        \ :call decorate#DecorateLine('" ', '', '', '', ' ', ' "', 'l')<CR>
+        \ :call decorate#DecorateLine('" ', '', '', '', ' ', '', 'l')<CR>
     autocmd Filetype vim nnoremap <buffer> <Leader>c
         \ I" <Esc>
 augroup END
 
 augroup javascript
     autocmd!
+    autocmd Filetype javascript setlocal softtabstop=2 shiftwidth=2
     autocmd Filetype javascript nnoremap <buffer> <silent> <Leader>b
         \ :let b:indentExpr = &indentexpr<CR>
         \:set indentexpr=<CR>
-        \:call decorate#DecorateLine('//', '', '', '', '', '//')<CR>
+        \:call decorate#DecorateLine('// ', '', '', '', '', '')<CR>
         \O<Esc>
         \:call decorate#DecorateLine('//', '//', '', '')<CR>
         \jo<Esc>
         \:call decorate#DecorateLine('//', '//', '', '')<CR>
         \:execute 'set indentexpr=' . b:indentExpr<CR>
     autocmd Filetype javascript noremap <buffer> <silent> <Leader>d
-        \ :call decorate#DecorateLine('// ', '', '', '', ' ', ' //', 'l')<CR>
+        \ :call decorate#DecorateLine('// ', '', '', '', ' ', '', 'l')<CR>
     autocmd Filetype javascript nnoremap <buffer> <Leader>c
         \ I// <Esc>
     autocmd Filetype javascript inoreabbrev iff
