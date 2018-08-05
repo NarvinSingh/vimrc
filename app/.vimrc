@@ -2,9 +2,9 @@
 "                                  Functions                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:EatChar(pattern)
-    let c = nr2char(getchar(0))
+  let c = nr2char(getchar(0))
 
-    return (c =~ a:pattern) ? '' : c
+  return (c =~ a:pattern) ? '' : c
 endfunction
 
 
@@ -14,9 +14,9 @@ endfunction
 
 " Cursors
 if &term =~ 'xterm'
-    let &t_EI = "\<Esc>[2 q"
-    let &t_SI = "\<Esc>[5 q"
-    let &t_SR = "\<Esc>[1 q"
+  let &t_EI = "\<Esc>[2 q"
+  let &t_SI = "\<Esc>[5 q"
+  let &t_SR = "\<Esc>[1 q"
 endif
 
 " Colors
@@ -37,7 +37,7 @@ set nowrap breakindent textwidth=80 linebreak
 let &showbreak = '↪ '
 
 " Indenting
-set autoindent softtabstop=4 shiftwidth=4 expandtab
+set autoindent softtabstop=2 shiftwidth=2 expandtab
 filetype plugin indent on
 
 
@@ -69,28 +69,28 @@ inoremap <Esc> <Nop>
 
 " Toggling line numbers
 nnoremap <silent><expr> <Leader>n &number == 1 ?
-    \ ':set nonumber norelativenumber<CR>' .
-    \ ':echo ''nonumber norelativenumber''<CR>' :
-    \ ':set number relativenumber<CR>' .
-    \ ':echo ''  number   relativenumber''<CR>'
+  \ ':set nonumber norelativenumber<CR>' .
+  \ ':echo ''nonumber norelativenumber''<CR>' :
+  \ ':set number relativenumber<CR>' .
+  \ ':echo ''  number   relativenumber''<CR>'
 
 " Toggling  hidden characters
 nnoremap <silent><Leader>l :set list! list?<CR>
 
 " Toggling wrapping
 nnoremap <silent><expr> <Leader>w &wrap == 1 ?
-    \ ':set nowrap<CR>' .
-    \ ':echo ''nowrap''<CR>' :
-    \ ':set wrap linebreak<CR>' .
-    \ ':echo ''  wrap   linebreak''<CR>'
+  \ ':set nowrap<CR>' .
+  \ ':echo ''nowrap''<CR>' :
+  \ ':set wrap linebreak<CR>' .
+  \ ':echo ''  wrap   linebreak''<CR>'
 
 " Turning of highlighting for current search
 nnoremap <silent> <Leader><Space> :nohlsearch<CR>
 
 " Sourcing files
 nnoremap <silent> <Leader>ss :update<CR>
-    \:execute 'source ' . expand('%:p')<CR>
-    \:echo 'Sourced this file'<CR>
+  \:execute 'source ' . expand('%:p')<CR>
+  \:echo 'Sourced this file'<CR>
 
 " Editing .vimrc
 nnoremap <silent> <Leader>ev :vsplit $MYVIMRC<CR>
@@ -102,61 +102,74 @@ nnoremap <silent> <Leader>ev :vsplit $MYVIMRC<CR>
 
 " Filetype commands
 augroup vimscript
-    autocmd!
-    autocmd Filetype vim nnoremap <buffer> <silent> <Leader>b
-        \ :call decorate#DecorateLine('" ', '', '', '', '', '')<CR>
-        \O<Esc>
-        \:call decorate#DecorateLine('"', '"', '', '')<CR>
-        \jo<Esc>
-        \:call decorate#DecorateLine('"', '"', '', '')<CR>
-    autocmd Filetype vim noremap <buffer> <silent> <Leader>d
-        \ :call decorate#DecorateLine('" ', '', '', '', ' ', '', 'l')<CR>
-    autocmd Filetype vim nnoremap <buffer> <Leader>c
-        \ I" <Esc>
+  autocmd!
+  autocmd Filetype vim nnoremap <buffer> <silent> <Leader>b
+    \ :call decorate#DecorateLine('" ', '', '', '', '', '')<CR>
+    \O<Esc>
+    \:call decorate#DecorateLine('"', '"', '', '')<CR>
+    \jo<Esc>
+    \:call decorate#DecorateLine('"', '"', '', '')<CR>
+  autocmd Filetype vim noremap <buffer> <silent> <Leader>d
+    \ :call decorate#DecorateLine('" ', '', '', '', ' ', '', 'l')<CR>
+  autocmd Filetype vim nnoremap <buffer> <Leader>c
+    \ I" <Esc>
+augroup END
+
+augroup shell
+  autocmd!
+  autocmd Filetype sh,zsh nnoremap <buffer> <silent> <Leader>b
+    \ :call decorate#DecorateLine('# ', '', '', '', '', '')<CR>
+    \O<Esc>
+    \:call decorate#DecorateLine('#', '#', '', '')<CR>
+    \jo<Esc>
+    \:call decorate#DecorateLine('#', '#', '', '')<CR>
+  autocmd Filetype sh,zsh noremap <buffer> <silent> <Leader>d
+    \ :call decorate#DecorateLine('# ', '', '', '', ' ', '', 'l')<CR>
+  autocmd Filetype sh,zsh nnoremap <buffer> <Leader>c
+    \ I# <Esc>
 augroup END
 
 augroup javascript
-    autocmd!
-    autocmd Filetype javascript setlocal softtabstop=2 shiftwidth=2
-    autocmd Filetype javascript nnoremap <buffer> <silent> <Leader>b
-        \ :let b:indentExpr = &indentexpr<CR>
-        \:set indentexpr=<CR>
-        \:call decorate#DecorateLine('// ', '', '', '', '', '')<CR>
-        \O<Esc>
-        \:call decorate#DecorateLine('//', '//', '', '')<CR>
-        \jo<Esc>
-        \:call decorate#DecorateLine('//', '//', '', '')<CR>
-        \:execute 'set indentexpr=' . b:indentExpr<CR>
-    autocmd Filetype javascript noremap <buffer> <silent> <Leader>d
-        \ :call decorate#DecorateLine('// ', '', '', '', ' ', '', 'l')<CR>
-    autocmd Filetype javascript nnoremap <buffer> <Leader>c
-        \ I// <Esc>
-    autocmd Filetype javascript inoreabbrev iff
-        \ if ()<Left><C-r>=<SID>EatChar('\s')<CR>
-    autocmd Filetype javascript inoreabbrev eii
-        \ <BS><Down><Esc>A else if ()<Left><C-r>=<SID>EatChar('\s')<CR>
-    autocmd Filetype javascript inoreabbrev ell
-        \ <BS><Down><Esc>A else {<CR>}<Esc>O<C-r>=<SID>EatChar('\s')<CR>
-    autocmd Filetype javascript inoreabbrev foo
-        \ for ()<Left><C-r>=<SID>EatChar('\s')<CR>
-    autocmd Filetype javascript inoreabbrev whh
-        \ while ()<Left><C-r>=<SID>EatChar('\s')<CR>
-    autocmd Filetype javascript inoreabbrev doo
-        \ do {<CR>} while()<Esc>O<Tab><C-r>=<SID>EatChar('\s')<CR>
-    autocmd Filetype javascript inoreabbrev sww
-        \ switch ()<Left><C-r>=<SID>EatChar('\s')<CR>
-    autocmd Filetype javascript inoreabbrev caa
-        \ case :<Left><C-r>=<SID>EatChar('\s')<CR>
-    autocmd Filetype javascript inoreabbrev dee
-        \ default:<CR><C-r>=<SID>EatChar('\s')<CR>
-    autocmd Filetype javascript inoreabbrev ree
-        \ return;<Left><C-r>=<SID>EatChar('\s')<CR>
-    autocmd Filetype javascript inoreabbrev brr
-        \ break;<C-r>=<SID>EatChar('\s')<CR>
-    autocmd Filetype javascript inoreabbrev coo
-        \ continue;<C-r>=<SID>EatChar('\s')<CR>
-    autocmd Filetype javascript inoreabbrev jb
-        \ <BS><Esc>A {<CR>}<Esc>O<C-r>=<SID>EatChar('\s')<CR>
-    autocmd Filetype javascript inoreabbrev jo
-        \ <BS><Down><Esc>o<C-r>=<SID>EatChar('\s')<CR>
+  autocmd!
+  autocmd Filetype javascript nnoremap <buffer> <silent> <Leader>b
+    \ :let b:indentExpr = &indentexpr<CR>
+    \:set indentexpr=<CR>
+    \:call decorate#DecorateLine('// ', '', '', '', '', '')<CR>
+    \O<Esc>
+    \:call decorate#DecorateLine('//', '//', '', '')<CR>
+    \jo<Esc>
+    \:call decorate#DecorateLine('//', '//', '', '')<CR>
+    \:execute 'set indentexpr=' . b:indentExpr<CR>
+  autocmd Filetype javascript noremap <buffer> <silent> <Leader>d
+    \ :call decorate#DecorateLine('// ', '', '', '', ' ', '', 'l')<CR>
+  autocmd Filetype javascript nnoremap <buffer> <Leader>c
+    \ I// <Esc>
+  autocmd Filetype javascript inoreabbrev iff
+    \ if ()<Left><C-r>=<SID>EatChar('\s')<CR>
+  autocmd Filetype javascript inoreabbrev eii
+    \ <BS><Down><Esc>A else if ()<Left><C-r>=<SID>EatChar('\s')<CR>
+  autocmd Filetype javascript inoreabbrev ell
+    \ <BS><Down><Esc>A else {<CR>}<Esc>O<C-r>=<SID>EatChar('\s')<CR>
+  autocmd Filetype javascript inoreabbrev foo
+    \ for ()<Left><C-r>=<SID>EatChar('\s')<CR>
+  autocmd Filetype javascript inoreabbrev whh
+    \ while ()<Left><C-r>=<SID>EatChar('\s')<CR>
+  autocmd Filetype javascript inoreabbrev doo
+    \ do {<CR>} while()<Esc>O<Tab><C-r>=<SID>EatChar('\s')<CR>
+  autocmd Filetype javascript inoreabbrev sww
+    \ switch ()<Left><C-r>=<SID>EatChar('\s')<CR>
+  autocmd Filetype javascript inoreabbrev caa
+    \ case :<Left><C-r>=<SID>EatChar('\s')<CR>
+  autocmd Filetype javascript inoreabbrev dee
+    \ default:<CR><C-r>=<SID>EatChar('\s')<CR>
+  autocmd Filetype javascript inoreabbrev ree
+    \ return;<Left><C-r>=<SID>EatChar('\s')<CR>
+  autocmd Filetype javascript inoreabbrev brr
+    \ break;<C-r>=<SID>EatChar('\s')<CR>
+  autocmd Filetype javascript inoreabbrev coo
+    \ continue;<C-r>=<SID>EatChar('\s')<CR>
+  autocmd Filetype javascript inoreabbrev jb
+    \ <BS><Esc>A {<CR>}<Esc>O<C-r>=<SID>EatChar('\s')<CR>
+  autocmd Filetype javascript inoreabbrev jo
+    \ <BS><Down><Esc>o<C-r>=<SID>EatChar('\s')<CR>
 augroup END
