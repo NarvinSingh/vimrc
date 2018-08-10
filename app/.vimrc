@@ -30,7 +30,7 @@ set hlsearch incsearch
 nohlsearch
 
 " Status line
-set statusline=%f\ %y\ %m\ %r\ %{FugitiveStatusline()}%=%v\ %l/%L
+set statusline=%f\ %y%r\ %{gitstatus#GetBufferStatus()}%m%=%v\ %l/%L
 
 " Wrapping
 set nowrap breakindent textwidth=80 linebreak
