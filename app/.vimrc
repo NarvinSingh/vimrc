@@ -9,7 +9,7 @@ endfunction
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                  Appearance
+"                                  Appearance                                  "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Cursors
@@ -48,7 +48,7 @@ set backspace=indent,eol,start
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                   Mappings
+"                                   Mappings                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Leader
@@ -97,14 +97,14 @@ nnoremap <silent> <Leader>ev :vsplit $MYVIMRC<CR>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                  Auto Commands
+"                                Auto Commands                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Filetype commands
 augroup vimscript
   autocmd!
   autocmd Filetype vim nnoremap <buffer> <silent> <Leader>b
-    \ :call decorate#DecorateLine('" ', '', '', '', '', '')<CR>
+    \ :call decorate#DecorateLine('" ', '', '', '', '', ' "')<CR>
     \O<Esc>
     \:call decorate#DecorateLine('"', '"', '', '')<CR>
     \jo<Esc>
@@ -118,7 +118,7 @@ augroup END
 augroup shell
   autocmd!
   autocmd Filetype sh,zsh nnoremap <buffer> <silent> <Leader>b
-    \ :call decorate#DecorateLine('# ', '', '', '', '', '')<CR>
+    \ :call decorate#DecorateLine('# ', '', '', '', '', ' #')<CR>
     \O<Esc>
     \:call decorate#DecorateLine('#', '#', '', '')<CR>
     \jo<Esc>
@@ -134,7 +134,7 @@ augroup javascript
   autocmd Filetype javascript,json nnoremap <buffer> <silent> <Leader>b
     \ :let b:indentExpr = &indentexpr<CR>
     \:set indentexpr=<CR>
-    \:call decorate#DecorateLine('// ', '', '', '', '', '')<CR>
+    \:call decorate#DecorateLine('// ', '', '', '', '', ' //')<CR>
     \O<Esc>
     \:call decorate#DecorateLine('//', '//', '', '')<CR>
     \jo<Esc>
