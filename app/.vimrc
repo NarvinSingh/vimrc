@@ -127,6 +127,7 @@ augroup shell
     \ :call decorate#DecorateLine('# ', '', '', '', ' ', '', 'l')<CR>
   autocmd Filetype sh,zsh nnoremap <buffer> <Leader>c
     \ I# <Esc>
+  autocmd Filetype sh,zsh set foldmethod=marker
 augroup END
 
 augroup javascript
